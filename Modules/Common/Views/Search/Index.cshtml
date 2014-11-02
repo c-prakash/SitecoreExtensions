@@ -1,0 +1,21 @@
+﻿@using Framework.Sc.Extensions.Helpers
+@model Common.Models.SearchModel
+
+@using (Html.BeginRouteForm(Sitecore.Mvc.Configuration.MvcSettings.SitecoreRouteName, FormMethod.Post))
+{
+    @Html.Sitecore().AreaFormHandler()
+    @Html.HiddenFor(m => m.RedirectUrl)
+    <div>
+        @Html.EditorFor(m => m.SearchCriteria)
+        @Html.ValidationMessageFor(m => m.SearchCriteria)
+        <input type="submit" value="Search">
+
+        @if (Model.Result != null)
+        {
+            foreach (var item in Model.Result)
+            {
+                <div>@item</div>
+            }
+        }
+    </div>
+}
