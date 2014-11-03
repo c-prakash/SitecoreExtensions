@@ -1,5 +1,5 @@
 ﻿
-namespace Host
+namespace Sitecore.Host
 {
     public class MvcApplication : Sitecore.Web.Application
     {
