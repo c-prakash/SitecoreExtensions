@@ -1,0 +1,8 @@
+﻿@if (HttpContext.Current.User.Identity.IsAuthenticated)
+{
+    <h1>Current User is- @HttpContext.Current.User.Identity.Name</h1>
+}
+else
+{
+    <h1>Not authorized</h1>
+}

@@ -14,7 +14,6 @@ using Sitecore.Mvc.Extensions;
 using Sitecore.Mvc.Pipelines.Request.RequestBegin;
 using Sitecore.Sites;
 using Sitecore.Web;
-using System;
 using System.Web;
 using System.Web.Routing;
 
@@ -33,7 +32,7 @@ namespace Framework.Sc.Extensions.Pipelines.Request.RequestBegin
         /// <param name="args">The arguments.</param>
         public override void Process(RequestBeginArgs args)
         {
-            Assert.ArgumentNotNull((object)args, "args");
+            Assert.ArgumentNotNull(args, "args");
             if (!AnalyticsSettings.Enabled)
             {
                 return;
@@ -46,15 +45,15 @@ namespace Framework.Sc.Extensions.Pipelines.Request.RequestBegin
             }
 
             // get the current route data from the http context
-            var routeData = RouteTable.Routes.GetRouteData((HttpContextBase)new HttpContextWrapper(HttpContext.Current));
+            var routeData = RouteTable.Routes.GetRouteData(new HttpContextWrapper(HttpContext.Current));
             if (routeData != null)
             {
                 // get the specific route values based off your current route/url
                 var routeValueDictionary =
-                    (routeData.Route as Route).ValueOrDefault((Func<Route, RouteValueDictionary>)(r => r.Defaults));
+                    (routeData.Route as Route).ValueOrDefault(r => r.Defaults);
                 if (routeValueDictionary != null)
                 {
-                    var disableAnalytics = false;
+                    bool disableAnalytics;
 
                     // check if scDisableAnalyticsKey is one of those values in the route
                     if (bool.TryParse(Settings.GetSetting(DisableAjaxMvcAnalyticsKey), out disableAnalytics))

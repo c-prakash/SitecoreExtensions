@@ -4,6 +4,7 @@ using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 using System.Web.Mvc;
 using WebActivatorEx;
 using Framework.Sc.Extensions.Mvc;
+using Framework.Sc.Extensions.Security;
 
 [assembly: PreApplicationStartMethod(typeof(Framework.Bootstrap.Start.Bootstrapper), "Initialize")]
 [assembly: PostApplicationStartMethod(typeof(Framework.Bootstrap.Start.Bootstrapper), "Start")]
@@ -17,6 +18,7 @@ namespace Framework.Bootstrap.Start
         {
             // Register our modules
             DynamicModuleUtility.RegisterModule(typeof(ApplicationErrorModule));
+            //DynamicModuleUtility.RegisterModule(typeof(ClaimsTransformationHttpModule));
         }
 
         public static void Start()

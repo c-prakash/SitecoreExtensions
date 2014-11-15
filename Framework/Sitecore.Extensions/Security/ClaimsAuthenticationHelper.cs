@@ -97,7 +97,7 @@ namespace Framework.Sc.Extensions.Security
                     if (!string.IsNullOrEmpty(Thread.CurrentPrincipal.Identity.Name))
                     {
                         //return base.GetUser(Thread.CurrentPrincipal.Identity.Name, Thread.CurrentPrincipal.Identity.IsAuthenticated);
-                        return GetUser(Thread.CurrentPrincipal.Identity, Thread.CurrentPrincipal.Identity.IsAuthenticated);
+                        return GetUser(Thread.CurrentPrincipal.Identity);
                     }
                 }
 
@@ -116,7 +116,7 @@ namespace Framework.Sc.Extensions.Security
                     return null;
                 }
                 //return base.GetUser(identity.Name, identity.IsAuthenticated);
-                return GetUser(identity, identity.IsAuthenticated);
+                return GetUser(identity);
             }
 
             SessionSecurityToken sessionToken;
@@ -126,7 +126,7 @@ namespace Framework.Sc.Extensions.Security
                 var identity = sessionToken.ClaimsPrincipal.Identity;
                 if (!string.IsNullOrEmpty(identity.Name)) //&& User.Exists(Globalize(Context.Domain.Name, identity.Name)))
                     //return AuthenticationHelper.GetUser(Globalize(Context.Domain.Name, identity.Name), true);
-                    return ClaimsAuthenticationHelper.GetUser(sessionToken.ClaimsPrincipal);
+                    return GetUser(sessionToken.ClaimsPrincipal);
             }
 
             return base.GetCurrentUser();
@@ -142,10 +142,9 @@ namespace Framework.Sc.Extensions.Security
         /// <summary>
         /// Gets the user.
         /// </summary>
-        /// <param name="userName">Name of the user.</param>
-        /// <param name="isAuthenticated">if set to <c>true</c> [is authenticated].</param>
+        /// <param name="identity">The identity.</param>
         /// <returns></returns>
-        private static User GetUser(IIdentity identity, bool isAuthenticated)
+        private static User GetUser(IIdentity identity)
         {
             Assert.ArgumentNotNull(identity, "identity");
 
@@ -164,12 +163,13 @@ namespace Framework.Sc.Extensions.Security
         /// </summary>
         /// <param name="domainName">Name of the domain.</param>
         /// <param name="userName">Name of the user.</param>
-        /// <returns></returns>
+        /// <returns>Return globalized user name.</returns>
         private static string Globalize(string domainName, string userName)
         {
             var str = userName;
             if (!userName.StartsWith(domainName + "\\"))
                 str = domainName + "\\" + userName;
+
             return str;
         }
 

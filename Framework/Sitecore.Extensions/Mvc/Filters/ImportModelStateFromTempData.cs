@@ -25,7 +25,7 @@ namespace Framework.Sc.Extensions.Mvc.Filters
         /// <param name="filterContext">The filter context.</param>
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
-            ModelStateDictionary modelState = filterContext.Controller.TempData[Key] as ModelStateDictionary;
+            var modelState = filterContext.Controller.TempData[Key] as ModelStateDictionary;
             if (modelState != null)
             {
                 //Only Import if we are viewing
@@ -75,7 +75,7 @@ namespace Framework.Sc.Extensions.Mvc.Filters
         /// </summary>
         /// <param name="filterContext">The filter context.</param>
         /// <returns>Return parameter keyvalye pair from tempdata.</returns>
-        private IList<KeyValuePair<string, object>> GetStoredParameterValues(ActionExecutingContext filterContext)
+        private IEnumerable<KeyValuePair<string, object>> GetStoredParameterValues(ActionExecutingContext filterContext)
         {
             return filterContext.Controller.TempData.Where(td => td.Key.StartsWith(Key)).ToList();
         }

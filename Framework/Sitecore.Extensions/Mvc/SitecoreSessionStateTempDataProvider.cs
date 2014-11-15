@@ -54,7 +54,7 @@ namespace Framework.Sc.Extensions.Mvc
             if (requestItems == null || requestItems.Count <= 0)
                 context.Items[TempDataSessionStateKey] = requestItems = base.LoadTempData(controllerContext);
 
-            return (IDictionary<string, object>)requestItems ?? emptyDictionary;
+            return requestItems ?? emptyDictionary;
         }
     }
 }

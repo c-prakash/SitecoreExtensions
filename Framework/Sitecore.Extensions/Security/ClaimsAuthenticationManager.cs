@@ -1,22 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.IdentityModel.Services;
+using System.IdentityModel.Tokens;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace Infrastructure.Security
+namespace Framework.Sc.Extensions.Security
 {
-    public class ClaimsAuthenticationManager : System.Security.Claims.ClaimsAuthenticationManager
+    public class ClaimsTransformer : ClaimsAuthenticationManager
     {
         public override ClaimsPrincipal Authenticate(string resourceName, ClaimsPrincipal incomingPrincipal)
         {
-            if (incomingPrincipal != null && incomingPrincipal.Identity.IsAuthenticated == true)
-            {
-                ((ClaimsIdentity)incomingPrincipal.Identity).AddClaim(new Claim(ClaimTypes.Role, "Secured"));
-            }
+            if (!incomingPrincipal.Identity.IsAuthenticated)
+                return incomingPrincipal;
 
-            return incomingPrincipal;
+            var newPrincipal = Transform(incomingPrincipal);
+            EstablishSession(newPrincipal);
+            return newPrincipal;
+        }
+
+        protected virtual ClaimsPrincipal Transform(ClaimsPrincipal incomingPrincipal)
+        {
+           // var nameClaim = incomingPrincipal.Identities.First().FindFirst(ClaimTypes.Name);
+            var id = new ClaimsIdentity(new[] { new Claim(ClaimTypes.MobilePhone, "Hi") });
+            var principal = new ClaimsPrincipal(id);
+            return principal;
+        }
+
+        private void EstablishSession(ClaimsPrincipal principal)
+        {
+            if (HttpContext.Current != null)
+            {
+                var sessionToken = new SessionSecurityToken(principal);
+                FederatedAuthentication.SessionAuthenticationModule.WriteSessionTokenToCookie(sessionToken);
+            }
         }
     }
 }

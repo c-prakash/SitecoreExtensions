@@ -21,13 +21,13 @@ namespace Framework.Sc.Extensions.MvcAreas
         {
             get
             {
-                return "areacontroller::" + Controller + "#" + this.Action + "#" + Area + "#" + Namespaces;
+                return "areacontroller::" + Controller + "#" + Action + "#" + Area + "#" + Namespaces;
             }
         }
 
         public override void Render(System.IO.TextWriter writer)
         {
-            AreaControllerRunner controllerRunner = new AreaControllerRunner(this.Controller, this.Action, this.Area, this.Namespaces);
+            var controllerRunner = new AreaControllerRunner(Controller, Action, Area, Namespaces);
 
             string value = controllerRunner.Execute();
             if (string.IsNullOrEmpty(value))
@@ -41,10 +41,10 @@ namespace Framework.Sc.Extensions.MvcAreas
         {
             return "Controller: {0}. Action: {1}. Area {2}. Namespaces {3}".FormatWith(new object[]
 			{
-				this.Controller,
-				this.Action,
-                this.Area,
-                this.Namespaces
+				Controller,
+				Action,
+                Area,
+                Namespaces
 			});
         }
     }

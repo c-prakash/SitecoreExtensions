@@ -1,12 +1,12 @@
 ﻿using System.IO;
-using System.Threading.Tasks;
+using Framework.Core.Infrastructure.Logging;
 
 namespace Framework.Bootstrap
 {
     /// <summary>
     /// Logger implementation for File logging.
     /// </summary>
-    public class FileLogger : Framework.Core.Infrastructure.Logging.ILogger
+    public class FileLogger : ILogger
     {
         #region Constructor
 
@@ -15,9 +15,8 @@ namespace Framework.Bootstrap
         /// </summary>
         public FileLogger()
         {
-            writer = new StreamWriter("c:\\temp\\logtester.log", true);
-            writer.AutoFlush = true;
-            this.EnableAsync = true;
+            writer = new StreamWriter("c:\\temp\\logtester.log", true) {AutoFlush = true};
+            EnableAsync = true;
         }
 
         #endregion
@@ -29,7 +28,7 @@ namespace Framework.Bootstrap
         /// <summary>
         /// The disposed
         /// </summary>
-        private bool disposed = false;
+        private bool disposed;
 
         /// <summary>
         /// Gets or sets a value indicating whether [enable asynchronous] logging or not..
@@ -43,7 +42,7 @@ namespace Framework.Bootstrap
         /// Writes the specified log object.
         /// </summary>
         /// <param name="logObject">The log object.</param>
-        public void Write(Framework.Core.Infrastructure.Logging.Log logObject)
+        public void Write(Log logObject)
         {
             //return writer.WriteLineAsync(logObject.ToString());
             writer.WriteLine(logObject.ToString());

@@ -43,7 +43,7 @@ namespace Framework.Sc.Extensions.Mvc
         /// </returns>
         public ValueProviderResult GetValue(string key)
         {
-            return new ValueProviderResult(this.tempData[key], string.Empty, CultureInfo.CurrentCulture);
+            return new ValueProviderResult(tempData[key], string.Empty, CultureInfo.CurrentCulture);
         }
     }
 
@@ -52,13 +52,6 @@ namespace Framework.Sc.Extensions.Mvc
     /// </summary>
     public sealed class TempDataModelProviderFactory : ValueProviderFactory
     {
-        /// <summary>
-        /// Initialized a new instance of the <see cref="T:System.Web.Mvc.RouteDataValueProviderFactory" /> class.
-        /// </summary>
-        public TempDataModelProviderFactory()
-        {
-        }
-
         /// <summary>
         /// Returns a value-provider object for the specified controller context.
         /// </summary>

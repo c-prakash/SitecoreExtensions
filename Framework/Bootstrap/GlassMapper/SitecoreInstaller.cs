@@ -129,7 +129,6 @@ namespace Framework.Bootstrap.GlassMapper
         /// Performs the installation in the IUnityInstaller.
         /// </summary>
         /// <param name="container">The container.</param>
-        /// <param name="store">The configuration store.</param>
         public virtual void Install(IUnityContainer container)
         {
             container.Install(DataMapperInstaller,
@@ -170,7 +169,6 @@ namespace Framework.Bootstrap.GlassMapper
         /// Performs the installation in the <see cref="T:Castle.Windsor.IUnityContainer" />.
         /// </summary>
         /// <param name="container">The container.</param>
-        /// <param name="store">The configuration store.</param>
         public virtual void Install(IUnityContainer container)
         {
             container
@@ -237,7 +235,6 @@ namespace Framework.Bootstrap.GlassMapper
         /// Performs the installation in the <see cref="T:Castle.Windsor.IUnityContainer" />.
         /// </summary>
         /// <param name="container">The container.</param>
-        /// <param name="store">The configuration store.</param>
         public virtual void Install(IUnityContainer container)
         {
             container
@@ -275,7 +272,6 @@ namespace Framework.Bootstrap.GlassMapper
         /// Performs the installation in the <see cref="T:Castle.Windsor.IUnityContainer" />.
         /// </summary>
         /// <param name="container">The container.</param>
-        /// <param name="store">The configuration store.</param>
         public virtual void Install(IUnityContainer container)
         {
             // Tasks are called in the order they are specified.
@@ -305,12 +301,10 @@ namespace Framework.Bootstrap.GlassMapper
             Config = config;
         }
 
-
         /// <summary>
         /// Performs the installation in the <see cref="T:Castle.Windsor.IUnityContainer" />.
         /// </summary>
         /// <param name="container">The container.</param>
-        /// <param name="store">The configuration store.</param>
         public virtual void Install(IUnityContainer container)
         {
             // These tasks are run when Glass.Mapper tries to find the configuration the user has requested based on the type passed, e.g. 
@@ -350,12 +344,10 @@ namespace Framework.Bootstrap.GlassMapper
             Config = config;
         }
 
-
         /// <summary>
         /// Performs the installation in the <see cref="T:Castle.Windsor.IUnityContainer" />.
         /// </summary>
         /// <param name="container">The container.</param>
-        /// <param name="store">The configuration store.</param>
         public virtual void Install(IUnityContainer container)
         {
             //dynamic must be first
@@ -389,11 +381,11 @@ namespace Framework.Bootstrap.GlassMapper
         {
             Config = config;
         }
+
         /// <summary>
         /// Performs the installation in the <see cref="T:Castle.Windsor.IUnityContainer" />.
         /// </summary>
         /// <param name="container">The container.</param>
-        /// <param name="store">The configuration store.</param>
         public virtual void Install(IUnityContainer container)
         {
             // Tasks are called in the order they are specified below.

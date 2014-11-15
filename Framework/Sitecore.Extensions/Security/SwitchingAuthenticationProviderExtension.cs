@@ -13,8 +13,14 @@ namespace Framework.Sc.Extensions.Security
         {
             get
             {
-                var provider = typeof(SwitchingAuthenticationProviderExtension).BaseType.GetProperty("CurrentProvider", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance | BindingFlags.DeclaredOnly);
-                return provider.GetValue(this) as AuthenticationProvider;
+                var baseType = typeof(SwitchingAuthenticationProviderExtension).BaseType;
+                if (baseType != null)
+                {
+                    var provider = baseType.GetProperty("CurrentProvider", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+                    return provider.GetValue(this) as AuthenticationProvider;
+                }
+
+                return null;
             }
         }
 
@@ -26,7 +32,7 @@ namespace Framework.Sc.Extensions.Security
 
         public override User GetActiveUser()
         {
-            return this.CurrentProvider.GetActiveUser();
+            return CurrentProvider == null ? null : CurrentProvider.GetActiveUser();
         }
     }
 }

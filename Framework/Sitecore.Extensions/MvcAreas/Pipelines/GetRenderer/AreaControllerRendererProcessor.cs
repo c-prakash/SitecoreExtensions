@@ -32,7 +32,7 @@ namespace Framework.Sc.Extensions.MvcAreas.Pipelines.GetRenderer
             {
                 return;
             }
-            args.Result = this.GetRenderer(args.Rendering, args);
+            args.Result = GetRenderer(args.Rendering, args);
         }
 
         protected virtual Renderer GetRenderer(Rendering rendering, GetRendererArgs args)

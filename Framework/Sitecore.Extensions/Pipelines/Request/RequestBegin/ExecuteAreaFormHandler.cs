@@ -22,7 +22,7 @@ namespace Framework.Sc.Extensions.Pipelines.Request.RequestBegin
                 return;
             }
 
-            this.ExecuteHandler(controllerAndAction.Item1, controllerAndAction.Item2, areaName, namespaceName, args);
+            ExecuteHandler(controllerAndAction.Item1, controllerAndAction.Item2, areaName, namespaceName, args);
         }
 
         protected virtual void ExecuteHandler(string controllerName, string actionName, string areaName, string namespaceName, RequestBeginArgs args)

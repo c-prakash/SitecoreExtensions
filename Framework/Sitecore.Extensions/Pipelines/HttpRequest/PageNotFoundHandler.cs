@@ -1,4 +1,6 @@
-﻿using Sitecore;
+﻿using System.Globalization;
+using Framework.Sc.Extensions.ErrorHandler;
+using Sitecore;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Pipelines.HttpRequest;
@@ -22,13 +24,11 @@ namespace Framework.Sc.Extensions.Pipelines.HttpRequest
                     return;
             }
 
-            if(args.LocalPath.StartsWith("/sitecore")|| IsLocalFile(args.Context, args.Url.FilePath))
+            if (args.LocalPath.StartsWith("/sitecore") || IsLocalFile(args.Context, args.Url.FilePath))
                 return;
 
-            if (string.IsNullOrEmpty(Context.Site.Properties[PageNotFound]))
-                return;
-
-            Context.Item = GetPageNotFoundItem(Context.Site);
+            var pageNotFoundUrl = GetPageNotFoundUrl(Context.Site);
+            Context.Item = GetPageNotFoundItem(Context.Site, pageNotFoundUrl);
 
             if (Context.Item == null)
                 return;
@@ -44,22 +44,23 @@ namespace Framework.Sc.Extensions.Pipelines.HttpRequest
         protected Item GetItemByShortPath(SiteContext siteContext, string shortPath)
         {
             shortPath = shortPath.StartsWith("/") ? shortPath.Substring(1) : shortPath;
-            
+
             var fullPath = string.Concat(StringUtil.EnsurePostfix('/', siteContext.StartPath), shortPath);
             return siteContext.Database.GetItem(fullPath);
         }
 
-        public Item GetPageNotFoundItem(SiteContext siteContext)
+        public string GetPageNotFoundUrl(SiteContext siteContext)
         {
-            var propertyValue = siteContext.Properties[PageNotFound];
-            
-            if (string.IsNullOrEmpty(propertyValue))
-                return null;
-            
-            if (ID.IsID(propertyValue) || propertyValue.StartsWith(Constants.ContentPath))
-                return siteContext.Database.GetItem(propertyValue);
-            
-            return GetItemByShortPath(siteContext, propertyValue);
+            var siteError = CustomError.Instance.GetSiteErrors(siteContext.Name);
+            return siteError.FirstOrDefaultStatusUrl(((int)System.Net.HttpStatusCode.NotFound).ToString(CultureInfo.InvariantCulture));
+        }
+
+        public Item GetPageNotFoundItem(SiteContext siteContext, string pageNotFoundUrl)
+        {
+            if (ID.IsID(pageNotFoundUrl) || pageNotFoundUrl.StartsWith(Constants.ContentPath))
+                return siteContext.Database.GetItem(pageNotFoundUrl);
+
+            return GetItemByShortPath(siteContext, pageNotFoundUrl);
         }
     }
 }

@@ -67,7 +67,7 @@ namespace Framework.Sc.Extensions.Helpers
             {
                 return new HtmlString(string.Empty);
             }
-            string str = HiddenField("scController", controller).ToString();
+            string str = HiddenField("scController", controller);
             if (!action.IsEmptyOrNull())
             {
                 str = string.Concat(str, HiddenField("scAction", action));
@@ -91,7 +91,7 @@ namespace Framework.Sc.Extensions.Helpers
         /// <returns>Return html tag for area form handler.</returns>
         public static string GetValueFromCurrentRendering(this SitecoreHelper sitecorehelper, string fieldName)
         {
-            Rendering rendering = RenderingContext.CurrentOrNull.ValueOrDefault<RenderingContext, Rendering>((RenderingContext context) => context.Rendering);
+            Rendering rendering = RenderingContext.CurrentOrNull.ValueOrDefault(context => context.Rendering);
             if (rendering == null)
             {
                 return null;

@@ -1,7 +1,6 @@
 ﻿using Common.Models;
 using Framework.Sc.Extensions.Mvc;
 using Framework.Sc.Extensions.Mvc.Filters;
-using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace Common.Controllers

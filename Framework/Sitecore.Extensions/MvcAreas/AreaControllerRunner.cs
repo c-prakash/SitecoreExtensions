@@ -17,32 +17,32 @@ namespace Framework.Sc.Extensions.MvcAreas
         public AreaControllerRunner(string controllerName, string actionName, string area, string namespaceName)
             : base(controllerName, actionName)
         {
-            this.Area = area;
-            this.ControllerName = controllerName;
-            this.ActionName = actionName;
-            this.Namespace = namespaceName;
+            Area = area;
+            ControllerName = controllerName;
+            ActionName = actionName;
+            Namespace = namespaceName;
         }
 
         public string Area { get; set; }
         public string Namespace { get; set; }
 
-        protected override void ExecuteController(System.Web.Mvc.Controller controller)
+        protected override void ExecuteController(Controller controller)
         {
             RequestContext requestContext = PageContext.Current.RequestContext;
-            object value = requestContext.RouteData.Values["controller"];
-            object value2 = requestContext.RouteData.Values["action"];
-            object value3 = requestContext.RouteData.DataTokens["area"];
-            object value4 = requestContext.RouteData.DataTokens["namespace"];
+            var value = requestContext.RouteData.Values["controller"];
+            var value2 = requestContext.RouteData.Values["action"];
+            var value3 = requestContext.RouteData.DataTokens["area"];
+            var value4 = requestContext.RouteData.DataTokens["namespace"];
 
             try
             {
-                requestContext.RouteData.Values["controller"] = this.ActualControllerName;
-                requestContext.RouteData.Values["action"] = this.ActionName;
-                requestContext.RouteData.DataTokens["area"] = this.Area;
+                requestContext.RouteData.Values["controller"] = ActualControllerName;
+                requestContext.RouteData.Values["action"] = ActionName;
+                requestContext.RouteData.DataTokens["area"] = Area;
 
-                var namespaces = new string[] { string.Empty };
-                if (!string.IsNullOrWhiteSpace(this.Namespace))
-                    namespaces = this.Namespace.Split(new char[] { ',' }, System.StringSplitOptions.RemoveEmptyEntries);
+                var namespaces = new[] { string.Empty };
+                if (!string.IsNullOrWhiteSpace(Namespace))
+                    namespaces = Namespace.Split(new[] { ',' }, System.StringSplitOptions.RemoveEmptyEntries);
 
                 requestContext.RouteData.DataTokens["namespace"] = namespaces;
                 ((IController)controller).Execute(PageContext.Current.RequestContext);

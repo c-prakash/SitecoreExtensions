@@ -9,7 +9,7 @@ namespace Framework.Bootstrap.Container
 {
     public class UnityDependencyContainer : IDependencyContainer
     {
-        private readonly IUnityContainer _container;
+        private readonly IUnityContainer container;
 
         #region Constructor
 
@@ -22,7 +22,7 @@ namespace Framework.Bootstrap.Container
 
         public UnityDependencyContainer(IUnityContainer container)
         {
-            _container = container;
+            this.container = container;
         }
 
         ~UnityDependencyContainer()
@@ -39,7 +39,7 @@ namespace Framework.Bootstrap.Container
         {
             if (disposing)
             {
-                _container.Dispose();
+                container.Dispose();
             }
         }
 
@@ -52,75 +52,75 @@ namespace Framework.Bootstrap.Container
 
         public bool IsRegistered(Type typeToCheck)
         {
-            return _container.IsRegistered(typeToCheck);
+            return container.IsRegistered(typeToCheck);
         }
 
         public void Register<T>(T instance)
         {
-            _container.RegisterInstance(instance);
+            container.RegisterInstance(instance);
         }
 
         public void Register<TFrom, TTo>()
             where TTo : TFrom
         {
-            _container.RegisterType<TFrom, TTo>();
+            container.RegisterType<TFrom, TTo>();
         }
 
         public void Register<TFrom, TTo>(IDictionary arguments = null) where TTo : TFrom
         {
-            _container.RegisterType<TFrom, TTo>();
+            container.RegisterType<TFrom, TTo>();
         }
 
         public void Register<TFrom, TTo>(LifetimeScope lifetimeScope, IDictionary arguments = null) where TTo : TFrom
         {
-            _container.RegisterType<TFrom, TTo>();
+            container.RegisterType<TFrom, TTo>();
         }
 
         public void Inject<T>(T existing)
         {
-            _container.BuildUp(existing);
+            container.BuildUp(existing);
         }
 
         public T Resolve<T>()
         {
-            return _container.Resolve<T>();
+            return container.Resolve<T>();
         }
 
         public T Resolve<T>(string name)
         {
-            return _container.Resolve<T>(name);
+            return container.Resolve<T>(name);
         }
 
         public T Resolve<T>(Type type)
         {
-            return (T)_container.Resolve(type);
+            return (T)container.Resolve(type);
         }
 
         public T Resolve<T>(Type type, string name)
         {
-            return (T)_container.Resolve(type, name);
+            return (T)container.Resolve(type, name);
         }
 
         public T Resolve<T>(IDictionary arguments)
         {
             ParameterOverrides resolverOverride = GetParametersOverrideFromDictionary<T>(arguments);
-            return _container.Resolve<T>(resolverOverride);
+            return container.Resolve<T>(resolverOverride);
         }
 
         public T Resolve<T>(string name, IDictionary arguments)
         {
             ParameterOverrides resolverOverride = GetParametersOverrideFromDictionary<T>(arguments);
-            return _container.Resolve<T>(name, resolverOverride);
+            return container.Resolve<T>(name, resolverOverride);
         }
 
         public IEnumerable<T> ResolveAll<T>()
         {
-            IEnumerable<T> namedInstances = _container.ResolveAll<T>();
+            IEnumerable<T> namedInstances = container.ResolveAll<T>();
             T unnamedInstance = default(T);
 
             try
             {
-                unnamedInstance = _container.Resolve<T>();
+                unnamedInstance = container.Resolve<T>();
             }
             catch (ResolutionFailedException)
             {
@@ -137,12 +137,12 @@ namespace Framework.Bootstrap.Container
 
         public IEnumerable<T> ResolveAll<T>(Type type)
         {
-            return (IEnumerable<T>)_container.ResolveAll(type);
+            return (IEnumerable<T>)container.ResolveAll(type);
         }
 
         private static ParameterOverrides GetParametersOverrideFromDictionary<T>(IDictionary arguments)
         {
-            ParameterOverrides resolverOverride = new ParameterOverrides();
+            var resolverOverride = new ParameterOverrides();
             foreach (string key in arguments.Keys)
             {
                 resolverOverride.Add(key, arguments[key]);

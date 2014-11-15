@@ -51,6 +51,16 @@ namespace Framework.Sc.Extensions.Mvc
         }
 
         /// <summary>
+        /// Redirects the specified controller.
+        /// </summary>
+        /// <param name="controller">The controller.</param>
+        /// <returns>Return the redirect result with redirect url.</returns>
+        public static RedirectResult Redirect(this Controller controller)
+        {
+            return controller.Redirect(string.Empty, (FormModel)null);
+        }
+
+        /// <summary>
         /// Gets the type of the request.
         /// </summary>
         /// <param name="httpContext">The HTTP context.</param>
@@ -58,9 +68,9 @@ namespace Framework.Sc.Extensions.Mvc
         private static HttpVerbs GetRequestType(HttpContextBase httpContext)
         {
             HttpVerbs httpVerb;
-            if (!Enum.TryParse<HttpVerbs>(httpContext.Request.RequestType, true, out httpVerb))
+            if (!Enum.TryParse(httpContext.Request.RequestType, true, out httpVerb))
             {
-                object[] requestType = new object[] { httpContext.Request.RequestType };
+                return default(HttpVerbs);
             }
 
             return httpVerb;

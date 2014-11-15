@@ -8,7 +8,7 @@ namespace Framework.Bootstrap.GlassMapper.ObjectConstruction
     /// </summary>
     public class UnityConstruction : IObjectConstructionTask
     {
-        private static object _lock = new object();
+        private static readonly object LockObject  = new object();
 
         /// <summary>
         /// Executes the specified arguments.
@@ -17,32 +17,36 @@ namespace Framework.Bootstrap.GlassMapper.ObjectConstruction
         public void Execute(ObjectConstructionArgs args)
         {
             var resolver = args.Context.DependencyResolver as DependencyResolver;
+
+            if (resolver == null)
+                return;
+
             //check that no other task has created an object
             //also check that this is a dynamic object
-            if (args.Result == null && !args.Configuration.Type.IsAssignableFrom(typeof(IDynamicMetaObjectProvider)))
+            if (args.Result != null || args.Configuration.Type.IsAssignableFrom(typeof (IDynamicMetaObjectProvider)))
+                return;
+
+            //check to see if the type is registered with the container
+            //if it isn't added it
+            if (resolver.Container.IsRegistered(args.Configuration.Type))
             {
-                //check to see if the type is registered with the container
-                //if it isn't added it
-                if (resolver.Container.IsRegistered(args.Configuration.Type))
+                lock (LockObject)
                 {
-                    lock (_lock)
+                    if (resolver.Container.IsRegistered(args.Configuration.Type))
                     {
-                        if (resolver.Container.IsRegistered(args.Configuration.Type))
-                        {
-                            resolver.Container.Register<object>(args.Configuration.Type);
-                        }
+                        resolver.Container.Register<object>(args.Configuration.Type);
                     }
                 }
-
-                //create instance using SimpleInjector
-                var obj = resolver.Container.Resolve<object>(args.Configuration.Type);
-
-                //map properties from item to model
-                args.Configuration.MapPropertiesToObject(obj, args.Service, args.AbstractTypeCreationContext);
-
-                //set the new object as the returned result
-                args.Result = obj;
             }
+
+            //create instance using SimpleInjector
+            var obj = resolver.Container.Resolve<object>(args.Configuration.Type);
+
+            //map properties from item to model
+            args.Configuration.MapPropertiesToObject(obj, args.Service, args.AbstractTypeCreationContext);
+
+            //set the new object as the returned result
+            args.Result = obj;
         }
     }
 }

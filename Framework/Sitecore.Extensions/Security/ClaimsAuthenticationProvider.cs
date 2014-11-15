@@ -68,7 +68,7 @@ namespace Framework.Sc.Extensions.Security
         /// </returns>
         public override User GetActiveUser()
         {
-            var activeUser = this.Helper.GetActiveUser();
+            var activeUser = Helper.GetActiveUser();
             Assert.IsNotNull(activeUser, "Active user cannot be empty.");
             return activeUser;
         }
@@ -86,7 +86,7 @@ namespace Framework.Sc.Extensions.Security
             SessionSecurityToken sessionToken;
             if (!FederatedAuthentication.SessionAuthenticationModule.TryReadSessionTokenFromCookie(out sessionToken))
             {
-                var claims = new Claim[] { new Claim(ClaimTypes.Name, Globalize(Context.Domain.Name, userName)), new Claim(ClaimTypes.Role, "Secured") };
+                var claims = new[] { new Claim(ClaimTypes.Name, Globalize(Context.Domain.Name, userName)), new Claim(ClaimTypes.Role, "Secured") };
                 var id = new ClaimsIdentity(claims, "Forms");
                 var cp = new ClaimsPrincipal(id);
 
@@ -107,7 +107,7 @@ namespace Framework.Sc.Extensions.Security
         {
             Assert.ArgumentNotNull(user, "user");
 
-            return this.Login(user.Name, false);
+            return Login(user.Name, false);
         }
 
         /// <summary>
