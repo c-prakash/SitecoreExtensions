@@ -1,13 +1,11 @@
-﻿using Framework.Core.Infrastructure.IoC;
-using Framework.Bootstrap.Container;
+﻿using Framework.Bootstrap.Container;
+using Framework.Core.Infrastructure.IoC;
+using Framework.Sc.Extensions.ErrorHandler;
+using Framework.Sc.Extensions.Mvc;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 using System.Web.Mvc;
-using WebActivatorEx;
-using Framework.Sc.Extensions.Mvc;
-using Framework.Sc.Extensions.Security;
 
-[assembly: PreApplicationStartMethod(typeof(Framework.Bootstrap.Start.Bootstrapper), "Initialize")]
-[assembly: PostApplicationStartMethod(typeof(Framework.Bootstrap.Start.Bootstrapper), "Start")]
+[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(Framework.Bootstrap.Start.Bootstrapper), "Initialize")]
 [assembly: WebActivatorEx.ApplicationShutdownMethod(typeof(Framework.Bootstrap.Start.Bootstrapper), "Shutdown")]
 
 namespace Framework.Bootstrap.Start
@@ -17,7 +15,8 @@ namespace Framework.Bootstrap.Start
         public static void Initialize()
         {
             // Register our modules
-            DynamicModuleUtility.RegisterModule(typeof(ApplicationErrorModule));
+            DynamicModuleUtility.RegisterModule(typeof(ErrorLoggerModule));
+            DynamicModuleUtility.RegisterModule(typeof(ErrorHandlerModule));
             //DynamicModuleUtility.RegisterModule(typeof(ClaimsTransformationHttpModule));
         }
 
@@ -32,6 +31,11 @@ namespace Framework.Bootstrap.Start
 
         public static void Shutdown()
         {
+        }
+
+        public virtual void Process(object args)
+        {
+            Start();
         }
     }
 }

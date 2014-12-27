@@ -7,7 +7,7 @@ namespace Framework.Sc.Extensions.Mvc.Filters
     /// <summary>
     /// Import ModelState From TempData
     /// </summary>
-    public class ImportModelStateFromTempData : ModelStateTempDataTransfer
+    public class ImportModelStateFromTempData : ModelStateTransfer
     {
         /// <summary>
         /// Called by the ASP.NET MVC framework before the action method executes.

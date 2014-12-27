@@ -5,7 +5,6 @@ namespace Sitecore.Host
     {
         protected void Application_Start()
         {
-            
         }
     }
 }

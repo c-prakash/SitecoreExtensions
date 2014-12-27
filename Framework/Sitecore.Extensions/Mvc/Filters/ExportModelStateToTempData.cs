@@ -5,7 +5,7 @@ namespace Framework.Sc.Extensions.Mvc.Filters
     /// <summary>
     /// Export model state to temp data.
     /// </summary>
-    public class ExportModelStateToTempData : ModelStateTempDataTransfer
+    public class ExportModelStateToTempData : ModelStateTransfer
     {
         /// <summary>
         /// Called by the ASP.NET MVC framework after the action method executes.

@@ -39,13 +39,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Sitecore.Kernel">
-      <HintPath>..\..\Host\bin\Sitecore.Kernel.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="Sitecore.Kernel, Version=7.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Library\Sitecore.Kernel.dll</HintPath>
     </Reference>
-    <Reference Include="Sitecore.Mvc">
-      <HintPath>..\..\Host\bin\Sitecore.Mvc.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="Sitecore.Mvc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Library\Sitecore.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -139,6 +139,7 @@
     <Content Include="Web.config" />
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Welcome\Index.cshtml" />
+    <Content Include="Views\Search\Search.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

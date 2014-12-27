@@ -84,7 +84,7 @@
   <ItemGroup>
     <Compile Include="GlassMapper\DependencyResolver.cs" />
     <Compile Include="LogExtension.cs" />
-    <Compile Include="Start\ApplicationErrorModule.cs" />
+    <Compile Include="Start\ErrorLoggerModule.cs" />
     <Compile Include="Start\Bootstrapper.cs" />
     <Compile Include="FileLogger.cs" />
     <Compile Include="GlassMapper\GlassMapperSc.cs" />

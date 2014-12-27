@@ -5,11 +5,11 @@ namespace Framework.Sc.Extensions.Mvc.Filters
     /// <summary>
     /// Model state temp data transfer base class.
     /// </summary>
-    public abstract class ModelStateTempDataTransfer : ActionFilterAttribute
+    public abstract class ModelStateTransfer : ActionFilterAttribute
     {
         /// <summary>
         /// The key
         /// </summary>
-        protected static readonly string Key = typeof(ModelStateTempDataTransfer).FullName;
+        protected static readonly string Key = typeof(ModelStateTransfer).FullName;
     }
 }

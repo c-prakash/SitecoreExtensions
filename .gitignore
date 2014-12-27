@@ -158,3 +158,10 @@ $RECYCLE.BIN/
 /Host
 /Database
 /Data
+Library/HtmlAgilityPack.xml
+Library/ComponentArt.UIFramework.lic
+Library/ComponentArt.Web.UI.dll
+Library/EcmaScript.NET.modified.dll
+Library/Lucene.Net.Contrib.Analyzers.dll
+Library/Lucene.Net.Contrib.Core.dll
+Library/Lucene.Net.Contrib.FastVectorHighlighter.dll

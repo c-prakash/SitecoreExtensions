@@ -8,27 +8,50 @@ namespace Common.Controllers
 {
     public class AccountController : Controller
     {
-        // GET: Account
-        [ImportModelStateFromTempData]
+        [HttpGet]
+        [ImportModelState]
         public ActionResult Index()
         {
-            return View();
+            return View(new LoginModel());
         }
 
         [HttpPost]
-        [ExportModelStateToTempData]
-        public ActionResult Login(LoginModel login)
+        [ExportModelState]
+        public ActionResult Index(LoginModel login)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                if(login.UserName=="test" && login.Password=="test")
+                if (login.UserName == "test" && login.Password == "test")
                 {
                     AuthenticationManager.Login("test", false);
-                    return this.Redirect();
+                    return Redirect(ControllerContext.HttpContext.Request.RawUrl);
                 }
             }
 
-            return this.Redirect(login);
+            return View(login);
         }
+
+        //// GET: Account
+        //[ImportModelStateFromTempData]
+        //public ActionResult Index()
+        //{
+        //    return View();
+        //}
+
+        //[HttpPost]
+        //[ExportModelStateToTempData]
+        //public ActionResult Login(LoginModel login)
+        //{
+        //    if(ModelState.IsValid)
+        //    {
+        //        if(login.UserName=="test" && login.Password=="test")
+        //        {
+        //            AuthenticationManager.Login("test", false);
+        //            return this.Redirect();
+        //        }
+        //    }
+
+        //    return this.Redirect(login);
+        //}
     }
 }

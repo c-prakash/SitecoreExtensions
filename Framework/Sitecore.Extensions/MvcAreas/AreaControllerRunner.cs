@@ -51,8 +51,16 @@ namespace Framework.Sc.Extensions.MvcAreas
             {
                 requestContext.RouteData.Values["controller"] = value;
                 requestContext.RouteData.Values["action"] = value2;
-                requestContext.RouteData.DataTokens["area"] = value3;
-                requestContext.RouteData.DataTokens["namespace"] = value4;
+
+                if (value3 != null)
+                    requestContext.RouteData.DataTokens["area"] = value3;
+                else
+                    requestContext.RouteData.DataTokens.Remove("area");
+
+                if (value4 != null)
+                    requestContext.RouteData.DataTokens["namespace"] = value4;
+                else
+                    requestContext.RouteData.DataTokens.Remove("namespace");
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using Framework.Sc.Extensions.BaseModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Common.Models
 {
@@ -21,6 +22,7 @@ namespace Common.Models
         /// <value>
         /// The email.
         /// </value>
+        [Required]
         public string Email { get; set; }
 
         /// <summary>

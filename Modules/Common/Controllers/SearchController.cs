@@ -1,6 +1,5 @@
 ﻿using Common.Models;
 using Framework.Core.Infrastructure.Logging;
-using Framework.Sc.Extensions.Mvc;
 using Framework.Sc.Extensions.Mvc.Filters;
 using System;
 using System.Collections.Generic;
@@ -11,32 +10,30 @@ namespace Common.Controllers
 {
     public class SearchController : Controller
     {
+        [ImportModelState]
         [HttpGet]
-        [ImportModelStateFromTempData]
-        public ActionResult Index([TempDataModelBinder]SearchModel model)
+        public ActionResult Index(string term)
         {
-            if (!model.IsPost)
+            var model = new SearchModel();
+            if (!string.IsNullOrWhiteSpace(term))
             {
-                model = new SearchModel() { RedirectUrl = "/home/secured" };
+                model.SearchCriteria = term;
+                model.Result = new List<string> { "Hello!", "Hi!!!" };
             }
 
             return View(model);
         }
 
         [HttpPost]
-        [ExportModelStateToTempData]
+        [ExportModelState(ImportMethodName="Index")]
         public ActionResult Search(SearchModel search)
         {
             if (ModelState.IsValid)
             {
-                var criteria = search.SearchCriteria;
-                if (!string.IsNullOrWhiteSpace(criteria))
-                {
-                    search.Result = new List<string> { "Hello", "Hi!!!" };
-                }
+                return Redirect(ControllerContext.HttpContext.Request.RawUrl + "?term=" +search.SearchCriteria);
             }
 
-            return this.Redirect(search.RedirectUrl, search);
+            return Redirect(ControllerContext.HttpContext.Request.RawUrl);
         }
 
         private void LoggerAsyncPerformance()

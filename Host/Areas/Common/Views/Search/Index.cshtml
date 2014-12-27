@@ -19,3 +19,11 @@
         }
     </div>
 }
+@Html.IncludeScriptBlock(
+    @<script type='text/javascript'>
+        $(document).ready(function () {
+            alert('Hi');
+        });
+    </script>)
+
+@Html.IncludeScript("Site.js")

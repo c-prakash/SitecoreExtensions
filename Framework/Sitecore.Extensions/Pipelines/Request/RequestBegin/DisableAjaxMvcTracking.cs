@@ -74,14 +74,14 @@ namespace Framework.Sc.Extensions.Pipelines.Request.RequestBegin
             {
                 return;
             }
+           
+            //var currentVisit = Tracker.CurrentVisit;
+            //if (!string.IsNullOrEmpty(currentVisit.AspNetSessionId))
+            //{
+            //    return;
+            //}
 
-            var currentVisit = Tracker.CurrentVisit;
-            if (!string.IsNullOrEmpty(currentVisit.AspNetSessionId))
-            {
-                return;
-            }
-
-            currentVisit.AspNetSessionId = WebUtil.GetSessionID();
+            //currentVisit.AspNetSessionId = WebUtil.GetSessionID();
         }
     }
 }
