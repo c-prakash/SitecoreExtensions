@@ -17,7 +17,7 @@ namespace Framework.Bootstrap.Start
             // Register our modules
             DynamicModuleUtility.RegisterModule(typeof(ErrorLoggerModule));
             DynamicModuleUtility.RegisterModule(typeof(ErrorHandlerModule));
-            //DynamicModuleUtility.RegisterModule(typeof(ClaimsTransformationHttpModule));
+            DynamicModuleUtility.RegisterModule(typeof(Framework.Sc.Extensions.Security.ClaimsTransformationHttpModule));
         }
 
         public static void Start()

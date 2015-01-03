@@ -1,6 +1,12 @@
-﻿@if (HttpContext.Current.User.Identity.IsAuthenticated)
+﻿@using System.Security.Claims;
+@if (HttpContext.Current.User.Identity.IsAuthenticated)
 {
     <h1>Current User is- @HttpContext.Current.User.Identity.Name</h1>
+
+    foreach (var claim in (HttpContext.Current.User.Identity as ClaimsIdentity).Claims)
+    {
+        <h5>@(claim.Type + "-" + claim.Value)</h5>
+    }
 }
 else
 {

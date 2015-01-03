@@ -16,21 +16,28 @@ namespace Framework.Sc.Extensions.Security
         void context_PostAuthenticateRequest(object sender, EventArgs e)
         {
             var context = ((HttpApplication)sender).Context;
-
-            if (FederatedAuthentication.SessionAuthenticationModule != null &&
-                FederatedAuthentication.SessionAuthenticationModule.ContainsSessionTokenCookie(context.Request.Cookies))
-            {
+            
+            if (context == null)
                 return;
-            }
+
+            if (FederatedAuthentication.SessionAuthenticationModule == null)
+                return;
+
+            if (!FederatedAuthentication.SessionAuthenticationModule.ContainsSessionTokenCookie(context.Request.Cookies))
+                return;
 
             var transformer = FederatedAuthentication.FederationConfiguration.IdentityConfiguration.ClaimsAuthenticationManager;
 
             if (transformer != null)
             {
-                var transformedPrincipal = transformer.Authenticate(context.Request.RawUrl, context.User as ClaimsPrincipal);
+                var identity = context.User.Identity as ClaimsIdentity;
+                if (identity == null)
+                    return;
 
-                context.User = transformedPrincipal;
-                Thread.CurrentPrincipal = transformedPrincipal;
+                var transformedPrincipal = transformer.Authenticate(context.Request.RawUrl, new ClaimsPrincipal(identity));
+
+                //context.User = transformedPrincipal;
+                //Thread.CurrentPrincipal = transformedPrincipal;
             }
         }
 

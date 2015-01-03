@@ -19,10 +19,14 @@ namespace Framework.Sc.Extensions.Security
 
         protected virtual ClaimsPrincipal Transform(ClaimsPrincipal incomingPrincipal)
         {
-           // var nameClaim = incomingPrincipal.Identities.First().FindFirst(ClaimTypes.Name);
-            var id = new ClaimsIdentity(new[] { new Claim(ClaimTypes.MobilePhone, "Hi") });
-            var principal = new ClaimsPrincipal(id);
-            return principal;
+            var identity = incomingPrincipal.Identity as ClaimsIdentity;
+            if (identity != null && !incomingPrincipal.HasClaim(ClaimTypes.MobilePhone, "Hi"))
+            {
+                identity.AddClaim(new Claim(ClaimTypes.MobilePhone, "Hi"));
+                identity.AddClaim(new Claim(ClaimTypes.Role, "Secured"));
+            }
+
+            return incomingPrincipal;
         }
 
         private void EstablishSession(ClaimsPrincipal principal)

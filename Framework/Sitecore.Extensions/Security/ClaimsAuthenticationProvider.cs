@@ -86,7 +86,7 @@ namespace Framework.Sc.Extensions.Security
             SessionSecurityToken sessionToken;
             if (!FederatedAuthentication.SessionAuthenticationModule.TryReadSessionTokenFromCookie(out sessionToken))
             {
-                var claims = new[] { new Claim(ClaimTypes.Name, Globalize(Context.Domain.Name, userName)), new Claim(ClaimTypes.Role, "Secured") };
+                var claims = new[] { new Claim(ClaimTypes.Name, Globalize(Context.Domain.Name, userName))};
                 var id = new ClaimsIdentity(claims, "Forms");
                 var cp = new ClaimsPrincipal(id);
 
