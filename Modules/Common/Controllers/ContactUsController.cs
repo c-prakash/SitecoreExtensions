@@ -34,19 +34,14 @@ namespace Common.Controllers
         //}
 
         [HttpGet]
-        [ImportModelStateFromTempData]
-        public ActionResult Index([TempDataModelBinder]ContactUsModel model)
+        [ImportResult]
+        public ActionResult Index()
         {
-            if (!model.IsPost)
-            {
-                // Todo- if something is required during get on form post
-            }
-
-            return View(model);
+            return View(new ContactUsModel());
         }
 
         [HttpPost]
-        [ExportModelStateToTempData]
+        [ExportResult(ImportMethodName="Index")]
         public ActionResult ContactUsSave(ContactUsModel model)
         {
             if (ModelState.IsValid)
@@ -54,7 +49,7 @@ namespace Common.Controllers
                 model.Result = "You details has been recorded, we will contact you very soon.";
             }
 
-            return this.Redirect(model);
+            return View("Index", model);
         }
     }
 }

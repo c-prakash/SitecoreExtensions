@@ -75,12 +75,12 @@
     <Compile Include="ErrorHandler\SiteErrors.cs" />
     <Compile Include="Helpers\HtmlHelperScriptExtensions.cs" />
     <Compile Include="Mvc\ControllerExtensions.cs" />
-    <Compile Include="Mvc\Filters\ExportModelState.cs" />
     <Compile Include="Mvc\Filters\ExportModelStateToTempData.cs" />
-    <Compile Include="Mvc\Filters\ImportModelState.cs" />
+    <Compile Include="Mvc\Filters\ExportResult.cs" />
     <Compile Include="Mvc\Filters\ImportModelStateFromTempData.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Mvc\Filters\ImportResult.cs" />
     <Compile Include="Mvc\Filters\ModelStateTransfer.cs" />
     <Compile Include="Mvc\SitecoreSessionStateTempDataProvider.cs" />
     <Compile Include="Mvc\TempDataModelBinder.cs" />

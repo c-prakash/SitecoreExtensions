@@ -10,30 +10,24 @@ namespace Common.Controllers
 {
     public class SearchController : Controller
     {
-        [ImportModelState]
         [HttpGet]
-        public ActionResult Index(string term)
+        [ImportResult]
+        public ActionResult Index()
         {
             var model = new SearchModel();
-            if (!string.IsNullOrWhiteSpace(term))
-            {
-                model.SearchCriteria = term;
-                model.Result = new List<string> { "Hello!", "Hi!!!" };
-            }
-
             return View(model);
         }
 
         [HttpPost]
-        [ExportModelState(ImportMethodName="Index")]
+        [ExportResult(ImportMethodName="Index")]
         public ActionResult Search(SearchModel search)
         {
             if (ModelState.IsValid)
             {
-                return Redirect(ControllerContext.HttpContext.Request.RawUrl + "?term=" +search.SearchCriteria);
+                search.Result = new List<string> { "Hello!", "Hi!!!" };
             }
 
-            return Redirect(ControllerContext.HttpContext.Request.RawUrl);
+            return View(search);
         }
 
         private void LoggerAsyncPerformance()

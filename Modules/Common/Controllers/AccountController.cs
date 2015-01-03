@@ -9,14 +9,14 @@ namespace Common.Controllers
     public class AccountController : Controller
     {
         [HttpGet]
-        [ImportModelState]
+        [ImportResult]
         public ActionResult Index()
         {
             return View(new LoginModel());
         }
 
         [HttpPost]
-        [ExportModelState]
+        [ExportResult]
         public ActionResult Index(LoginModel login)
         {
             if (ModelState.IsValid)
@@ -30,28 +30,5 @@ namespace Common.Controllers
 
             return View(login);
         }
-
-        //// GET: Account
-        //[ImportModelStateFromTempData]
-        //public ActionResult Index()
-        //{
-        //    return View();
-        //}
-
-        //[HttpPost]
-        //[ExportModelStateToTempData]
-        //public ActionResult Login(LoginModel login)
-        //{
-        //    if(ModelState.IsValid)
-        //    {
-        //        if(login.UserName=="test" && login.Password=="test")
-        //        {
-        //            AuthenticationManager.Login("test", false);
-        //            return this.Redirect();
-        //        }
-        //    }
-
-        //    return this.Redirect(login);
-        //}
     }
 }
