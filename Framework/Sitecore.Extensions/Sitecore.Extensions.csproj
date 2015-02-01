@@ -74,6 +74,7 @@
     <Compile Include="ErrorHandler\SiteExceptionHandler.cs" />
     <Compile Include="ErrorHandler\SiteErrors.cs" />
     <Compile Include="Helpers\HtmlHelperScriptExtensions.cs" />
+    <Compile Include="Helpers\UserExtensions.cs" />
     <Compile Include="Mvc\ControllerExtensions.cs" />
     <Compile Include="Mvc\Filters\ExportModelStateToTempData.cs" />
     <Compile Include="Mvc\Filters\ExportResult.cs" />
@@ -82,6 +83,7 @@
     </Compile>
     <Compile Include="Mvc\Filters\ImportResult.cs" />
     <Compile Include="Mvc\Filters\ModelStateTransfer.cs" />
+    <Compile Include="Mvc\SitecoreAsyncActionInvoker.cs" />
     <Compile Include="Mvc\SitecoreSessionStateTempDataProvider.cs" />
     <Compile Include="Mvc\TempDataModelBinder.cs" />
     <Compile Include="Mvc\TempDataModelProvider.cs" />
